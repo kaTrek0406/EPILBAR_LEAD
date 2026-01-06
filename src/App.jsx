@@ -129,7 +129,16 @@ function App() {
 
   const sendToTelegram = async (data) => {
     const botToken = import.meta.env.VITE_TELEGRAM_BOT_TOKEN
-    const chatIds = import.meta.env.VITE_TELEGRAM_CHAT_ID.split(',')
+    const chatIds = import.meta.env.VITE_TELEGRAM_CHAT_ID?.split(',') || []
+
+    console.log('=== ОТПРАВКА В TELEGRAM ===')
+    console.log('Bot token присутствует:', !!botToken)
+    console.log('Количество chat IDs:', chatIds.length)
+
+    if (!botToken || chatIds.length === 0) {
+      console.error('Отсутствуют переменные окружения!')
+      return { success: false, error: 'Missing environment variables' }
+    }
 
     const serviceNames = {
       electro: 'Электро эпиляция',
@@ -251,7 +260,11 @@ ${data.comment ? `💬 Комментарий: ${data.comment}` : ''}
       }, 3000)
     } else {
       setIsSubmitting(false)
+      console.error('Ошибка отправки:', result.error)
       setErrors({ submit: 'Произошла ошибка при отправке. Попробуйте еще раз.' })
+
+      // Показываем детальное сообщение об ошибке
+      alert(`Ошибка отправки формы. Пожалуйста, свяжитесь с нами напрямую.\n\nДетали ошибки: ${result.error?.message || 'Неизвестная ошибка'}`)
     }
   }
 
@@ -420,6 +433,12 @@ ${data.comment ? `💬 Комментарий: ${data.comment}` : ''}
               )}
             </button>
           </form>
+
+          {errors.submit && (
+            <div className="error-message" style={{ marginTop: '1rem', textAlign: 'center', color: 'var(--error)' }}>
+              {errors.submit}
+            </div>
+          )}
 
           {submitSuccess && (
             <div className="success-message">
