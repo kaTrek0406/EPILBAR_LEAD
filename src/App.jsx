@@ -175,36 +175,54 @@ ${data.comment ? `💬 Комментарий: ${data.comment}` : ''}
     }
 
     try {
-      // Отправляем сообщение всем пользователям
+      // Отправляем сообщение всем пользователям (с обработкой ошибок для каждого)
       const promises = chatIds.map(async (chatId) => {
-        const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            chat_id: chatId.trim(),
-            text: message,
-            reply_markup: keyboard
+        try {
+          const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              chat_id: chatId.trim(),
+              text: message,
+              reply_markup: keyboard
+            })
           })
-        })
 
-        const result = await response.json()
+          const result = await response.json()
 
-        if (!response.ok) {
-          console.error(`Ошибка для chat_id ${chatId}:`, result)
-          throw new Error(`Telegram API error: ${result.description || 'Unknown error'}`)
+          if (!response.ok) {
+            console.error(`❌ Ошибка для chat_id ${chatId}:`, result.description)
+            return { success: false, chatId, error: result.description }
+          }
+
+          console.log(`✅ Сообщение успешно отправлено для chat_id ${chatId}`)
+          return { success: true, chatId }
+        } catch (error) {
+          console.error(`❌ Ошибка для chat_id ${chatId}:`, error.message)
+          return { success: false, chatId, error: error.message }
         }
-
-        console.log(`Сообщение успешно отправлено для chat_id ${chatId}`)
-        return result
       })
 
-      await Promise.all(promises)
-      console.log('Все сообщения успешно отправлены!')
-      return { success: true }
+      const results = await Promise.all(promises)
+
+      // Считаем успешные отправки
+      const successCount = results.filter(r => r.success).length
+      const failedCount = results.filter(r => !r.success).length
+
+      console.log(`📊 Результат: ${successCount} успешно, ${failedCount} ошибок`)
+
+      // Если хотя бы одно сообщение отправлено - считаем успехом
+      if (successCount > 0) {
+        console.log('🎉 Форма успешно отправлена!')
+        return { success: true, successCount, failedCount }
+      } else {
+        console.error('❌ Не удалось отправить ни одно сообщение')
+        return { success: false, error: 'Все получатели недоступны' }
+      }
     } catch (error) {
-      console.error('Ошибка отправки в Telegram:', error)
+      console.error('❌ Критическая ошибка отправки:', error)
       return { success: false, error }
     }
   }
@@ -261,10 +279,14 @@ ${data.comment ? `💬 Комментарий: ${data.comment}` : ''}
     } else {
       setIsSubmitting(false)
       console.error('Ошибка отправки:', result.error)
-      setErrors({ submit: 'Произошла ошибка при отправке. Попробуйте еще раз.' })
 
       // Показываем детальное сообщение об ошибке
-      alert(`Ошибка отправки формы. Пожалуйста, свяжитесь с нами напрямую.\n\nДетали ошибки: ${result.error?.message || 'Неизвестная ошибка'}`)
+      const errorMessage = typeof result.error === 'string'
+        ? result.error
+        : result.error?.message || 'Неизвестная ошибка'
+
+      setErrors({ submit: `Ошибка отправки: ${errorMessage}` })
+      alert(`Не удалось отправить форму. Пожалуйста, свяжитесь с нами напрямую.\n\nДетали: ${errorMessage}`)
     }
   }
 
