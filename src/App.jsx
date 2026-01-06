@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import logoEpilbar from '/logo_epilbar.png'
 
 function App() {
   const [formData, setFormData] = useState({
@@ -297,7 +298,7 @@ ${data.comment ? `💬 Комментарий: ${data.comment}` : ''}
           {/* Логотип и приветствие */}
           <div className="form-header">
             <div className="form-logo-container">
-              <img src="/logo_epilbar.png" alt="Epilbar" className="form-logo" />
+              <img src={logoEpilbar} alt="Epilbar" className="form-logo" />
             </div>
             <h1 className="form-welcome">Добро пожаловать в Epil Bar</h1>
             <p className="form-intro">
