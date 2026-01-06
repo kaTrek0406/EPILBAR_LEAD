@@ -1,0 +1,1226 @@
+:root {
+  --pink-50: #FEF7F8;
+  --pink-100: #FDE9EB;
+  --pink-200: #FBD5D9;
+  --pink-300: #F5B3B7;
+  --pink-400: #F09199;
+  --pink-500: #EB6F7B;
+  --pink-600: #D84C5D;
+  --pink-700: #B33A4A;
+  --pink-800: #8E2E3C;
+  --white: #ffffff;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-900: #111827;
+  --error: #ef4444;
+  --success: #10b981;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(245, 179, 183, 0.15), 0 2px 4px -1px rgba(245, 179, 183, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(245, 179, 183, 0.2), 0 4px 6px -2px rgba(245, 179, 183, 0.15);
+  --shadow-xl: 0 20px 25px -5px rgba(245, 179, 183, 0.25), 0 10px 10px -5px rgba(245, 179, 183, 0.15);
+}
+
+.app {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--pink-50) 0%, var(--pink-100) 50%, var(--white) 100%);
+  padding: 2rem 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.app::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, var(--pink-200) 0%, transparent 70%);
+  opacity: 0.3;
+  animation: float 20s ease-in-out infinite;
+}
+
+.app::after {
+  content: '';
+  position: absolute;
+  bottom: -50%;
+  left: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, var(--pink-300) 0%, transparent 70%);
+  opacity: 0.2;
+  animation: float 25s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate(30px, -30px) rotate(5deg);
+  }
+  66% {
+    transform: translate(-20px, 20px) rotate(-5deg);
+  }
+}
+
+.container {
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem;
+  position: relative;
+  z-index: 1;
+  transition: max-width 0.3s ease, padding 0.3s ease;
+}
+
+@keyframes logo-entrance {
+  0% {
+    transform: scale(0) rotate(-180deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.1) rotate(10deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-gentle {
+  0%, 100% {
+    filter: drop-shadow(0 8px 20px rgba(245, 179, 183, 0.35));
+  }
+  50% {
+    filter: drop-shadow(0 12px 30px rgba(245, 179, 183, 0.5));
+  }
+}
+
+@keyframes formSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.card {
+  background: var(--white);
+  border-radius: 24px;
+  padding: 3rem 2rem;
+  box-shadow: var(--shadow-xl);
+  animation: formSlideIn 0.6s ease-out;
+  border: 1px solid var(--pink-100);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Шапка формы с логотипом и приветствием */
+.form-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid var(--pink-100);
+}
+
+.form-logo-container {
+  margin-bottom: 1.5rem;
+  display: inline-block;
+}
+
+.form-logo {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  filter: drop-shadow(0 8px 20px rgba(245, 179, 183, 0.35));
+  transition: transform 0.4s ease, filter 0.4s ease;
+  background: transparent;
+  animation: logo-entrance 1s ease-out, pulse-gentle 4s ease-in-out infinite 1s;
+}
+
+.form-logo:hover {
+  transform: scale(1.08) rotate(5deg);
+  filter: drop-shadow(0 12px 30px rgba(245, 179, 183, 0.5));
+}
+
+.form-welcome {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gray-900);
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, var(--pink-600), var(--pink-400));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+.form-intro {
+  font-size: 1rem;
+  color: var(--gray-600);
+  line-height: 1.7;
+  max-width: 600px;
+  margin: 0 auto;
+  font-weight: 400;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--pink-400), var(--pink-600), var(--pink-400));
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gray-900);
+  margin-bottom: 0.5rem;
+  text-align: center;
+  background: linear-gradient(135deg, var(--pink-600), var(--pink-400));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  color: var(--gray-600);
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  animation: fadeIn 0.5s ease-out backwards;
+}
+
+.form-group:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.form-group:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.form-group:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.form-group:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.label {
+  font-weight: 500;
+  color: var(--gray-700);
+  font-size: 0.9rem;
+}
+
+.required {
+  color: var(--pink-500);
+  margin-left: 2px;
+}
+
+.input {
+  padding: 0.875rem 1rem;
+  border: 2px solid var(--gray-200);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  background: var(--white);
+  outline: none;
+}
+
+.input:focus {
+  border-color: var(--pink-400);
+  box-shadow: 0 0 0 4px rgba(245, 179, 183, 0.1);
+  transform: translateY(-2px);
+}
+
+.input:hover:not(:focus) {
+  border-color: var(--pink-300);
+}
+
+.input::placeholder {
+  color: var(--gray-300);
+}
+
+.select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23F5B3B7'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.5rem;
+  padding-right: 3rem;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+  font-family: inherit;
+}
+
+.input-error {
+  border-color: var(--error);
+  animation: shake 0.4s ease;
+}
+
+.input-error:focus {
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+}
+
+.input-success {
+  border-color: var(--success);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2310b981'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.25rem;
+  padding-right: 3rem;
+}
+
+.select.input-success {
+  background-position: right 2.75rem center, right 0.75rem center;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
+  }
+}
+
+.error-message {
+  color: var(--error);
+  font-size: 0.85rem;
+  margin-top: -0.25rem;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.submit-button {
+  margin-top: 1rem;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, var(--pink-500), var(--pink-600));
+  color: var(--white);
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.submit-button:hover:not(:disabled)::before {
+  left: 100%;
+}
+
+.submit-button:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  background: linear-gradient(135deg, var(--pink-600), var(--pink-700));
+}
+
+.submit-button:active:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.submit-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.submit-button.submitting {
+  background: linear-gradient(135deg, var(--pink-400), var(--pink-500));
+  animation: pulse-button 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-button {
+  0%, 100% {
+    box-shadow: var(--shadow-md);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(245, 179, 183, 0.4);
+  }
+}
+
+.submit-button.success {
+  background: linear-gradient(135deg, var(--success), #059669);
+  animation: success-bounce 0.6s ease;
+}
+
+@keyframes success-bounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: var(--white);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.checkmark {
+  font-size: 1.5rem;
+  animation: checkmark-pop 0.4s ease;
+}
+
+@keyframes checkmark-pop {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.success-message {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+  color: #065f46;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 500;
+  animation: slideDown 0.5s ease;
+  border: 1px solid #6ee7b7;
+}
+
+.footer {
+  margin-top: 2rem;
+  text-align: center;
+  animation: fadeIn 1s ease-out 0.5s backwards;
+  padding: 1.5rem 0 2rem 0;
+  border-top: 1px solid var(--pink-100);
+}
+
+.footer-text {
+  color: var(--gray-600);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+@keyframes pulse-gentle {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Responsive Design - Mobile First Approach */
+
+/* Extra Small Devices (Phones, до 375px) */
+@media (max-width: 375px) {
+  .app {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .container {
+    max-width: 100%;
+  }
+
+  .card {
+    padding: 1.5rem 1rem;
+    border-radius: 16px;
+  }
+
+  .title {
+    font-size: 1.25rem;
+  }
+
+  .subtitle {
+    font-size: 0.8rem;
+  }
+
+  .input,
+  .select,
+  .textarea {
+    padding: 0.625rem 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .submit-button {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.95rem;
+  }
+
+  .form-header {
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .form-logo {
+    width: 80px;
+    height: 80px;
+  }
+
+  .form-welcome {
+    font-size: 1.25rem;
+  }
+
+  .form-intro {
+    font-size: 0.875rem;
+  }
+
+  .footer {
+    margin-top: 1.5rem;
+    padding: 1rem 0 1.5rem 0;
+  }
+
+  .footer-text {
+    font-size: 0.75rem;
+  }
+
+  .form {
+    gap: 1.25rem;
+  }
+}
+
+/* Small Devices (Phones, 376px - 640px) */
+@media (min-width: 376px) and (max-width: 640px) {
+  .app {
+    padding: 1rem 0.75rem;
+  }
+
+  .card {
+    padding: 2rem 1.5rem;
+    border-radius: 20px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    font-size: 0.875rem;
+  }
+
+  .input,
+  .select,
+  .textarea {
+    padding: 0.75rem 0.875rem;
+    font-size: 0.95rem;
+  }
+
+  .submit-button {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .form-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.75rem;
+  }
+
+  .form-logo {
+    width: 100px;
+    height: 100px;
+  }
+
+  .form-welcome {
+    font-size: 1.5rem;
+  }
+
+  .form-intro {
+    font-size: 0.95rem;
+  }
+
+  .footer {
+    margin-top: 1.5rem;
+    padding: 1.25rem 0 1.5rem 0;
+  }
+}
+
+/* Medium Devices (Tablets, 641px - 768px) */
+@media (min-width: 641px) and (max-width: 768px) {
+  .container {
+    max-width: 90%;
+  }
+
+  .card {
+    padding: 2.5rem 2rem;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+  }
+
+  .form-logo {
+    width: 110px;
+    height: 110px;
+  }
+
+  .form-welcome {
+    font-size: 1.65rem;
+  }
+
+  .form-intro {
+    font-size: 0.98rem;
+  }
+}
+
+/* Large Tablets (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container {
+    max-width: 700px;
+  }
+
+  .card {
+    padding: 2.75rem 2.25rem;
+  }
+
+  .title {
+    font-size: 1.85rem;
+  }
+
+  .form-logo {
+    width: 115px;
+    height: 115px;
+  }
+
+  .form-welcome {
+    font-size: 1.75rem;
+  }
+
+  .form-intro {
+    font-size: 1rem;
+  }
+}
+
+/* Desktop (1025px and up) */
+@media (min-width: 1025px) {
+  .container {
+    max-width: 600px;
+  }
+
+  .card {
+    padding: 3rem 2rem;
+  }
+
+  /* Улучшенные эффекты для десктопа */
+  .form-group:hover {
+    transform: translateX(8px);
+  }
+
+  .card:hover {
+    box-shadow: 0 30px 40px -5px rgba(245, 179, 183, 0.3), 0 20px 20px -5px rgba(245, 179, 183, 0.2);
+  }
+}
+
+/* Extra Large Screens (1440px and up) */
+@media (min-width: 1440px) {
+  .container {
+    max-width: 650px;
+  }
+
+  .card {
+    padding: 3.5rem 2.5rem;
+  }
+
+  .title {
+    font-size: 2.25rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+}
+
+/* Landscape Mode для мобильных */
+@media (max-height: 600px) and (orientation: landscape) {
+  .app {
+    padding: 1rem;
+  }
+
+  .card {
+    padding: 1.5rem;
+  }
+
+  .footer {
+    margin-top: 1rem;
+    padding: 0.5rem 0 1rem 0;
+  }
+
+  .form-header {
+    margin-bottom: 1.25rem;
+    padding-bottom: 1rem;
+  }
+
+  .form-logo {
+    width: 70px;
+    height: 70px;
+  }
+
+  .form-welcome {
+    font-size: 1.1rem;
+  }
+
+  .form-intro {
+    font-size: 0.8rem;
+  }
+
+  .particles {
+    opacity: 0.5;
+  }
+}
+
+/* Touchscreen optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .input,
+  .select,
+  .textarea {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+
+  .submit-button {
+    min-height: 48px; /* Better touch target */
+  }
+
+  /* Упрощенные анимации для тач-устройств */
+  .form-group:hover {
+    transform: none;
+  }
+
+  .form-logo:hover {
+    transform: scale(1);
+  }
+}
+
+/* Дополнительные эффекты при наведении на форму */
+.form-group {
+  position: relative;
+}
+
+.form-group::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 50%;
+  width: 4px;
+  height: 0;
+  background: linear-gradient(180deg, var(--pink-400), var(--pink-600));
+  border-radius: 2px;
+  transition: height 0.3s ease, top 0.3s ease;
+  opacity: 0;
+}
+
+.form-group:focus-within::before {
+  height: 60%;
+  top: 20%;
+  opacity: 1;
+}
+
+/* Красивая анимация при загрузке страницы */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Анимированные частицы на фоне */
+.particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--pink-300), var(--pink-200));
+  opacity: 0.15;
+  animation: float-particle linear infinite;
+  filter: blur(2px);
+}
+
+@keyframes float-particle {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.15;
+  }
+  90% {
+    opacity: 0.15;
+  }
+  100% {
+    transform: translateY(-100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Конфетти */
+.confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: -10px;
+  animation: confetti-fall ease-in forwards;
+  opacity: 1;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(0) rotateZ(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotateZ(720deg);
+    opacity: 0;
+  }
+}
+
+/* Ripple эффект при клике на input */
+.input {
+  position: relative;
+  overflow: hidden;
+}
+
+.input:focus {
+  animation: input-glow 0.6s ease-out;
+}
+
+@keyframes input-glow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(245, 179, 183, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(245, 179, 183, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 4px rgba(245, 179, 183, 0.1);
+  }
+}
+
+/* Эффект печатающей машинки для заголовка */
+.title {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: fadeInDown 0.8s ease-out, typing 1.5s steps(30) 0.5s forwards;
+  max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* Эффект "дыхания" для карточки */
+.card {
+  animation: formSlideIn 0.6s ease-out, card-breathe 6s ease-in-out infinite 0.6s;
+}
+
+@keyframes card-breathe {
+  0%, 100% {
+    box-shadow: var(--shadow-xl);
+  }
+  50% {
+    box-shadow: 0 25px 35px -5px rgba(245, 179, 183, 0.25), 0 15px 15px -5px rgba(245, 179, 183, 0.15);
+  }
+}
+
+/* Волновой эффект при наведении на кнопку */
+.submit-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-button:hover:not(:disabled)::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+  to {
+    width: 400px;
+    height: 400px;
+    opacity: 0;
+  }
+}
+
+/* Анимация появления label при фокусе */
+.label {
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.form-group:focus-within .label {
+  color: var(--pink-600);
+  transform: translateX(5px);
+  font-weight: 600;
+}
+
+/* Магический курсор-трейл эффект */
+@keyframes magic-sparkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) rotate(180deg);
+  }
+}
+
+/* Эффект "волны" при скролле */
+.form-group {
+  transform-origin: left center;
+  transition: transform 0.3s ease;
+}
+
+.form-group:hover {
+  transform: translateX(8px);
+}
+
+/* Пульсация иконки успеха */
+.input-success {
+  animation: success-pulse 2s ease-in-out infinite;
+}
+
+@keyframes success-pulse {
+  0%, 100% {
+    border-color: var(--success);
+  }
+  50% {
+    border-color: #34d399;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+  }
+}
+
+/* Анимация ошибки с тряской */
+.error-message {
+  animation: slideDown 0.3s ease, error-shake 0.5s ease 0.3s;
+}
+
+@keyframes error-shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-8px);
+  }
+  75% {
+    transform: translateX(8px);
+  }
+}
+
+/* Градиентная анимация для subtitle */
+.subtitle {
+  background: linear-gradient(90deg, var(--gray-600), var(--pink-500), var(--gray-600));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-flow 4s linear infinite;
+}
+
+@keyframes gradient-flow {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* Звездочки вокруг обязательных полей */
+.required {
+  display: inline-block;
+  animation: star-twinkle 2s ease-in-out infinite;
+}
+
+@keyframes star-twinkle {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+}
+
+/* 3D эффект для кнопки */
+.submit-button:not(:disabled) {
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.submit-button:hover:not(:disabled) {
+  transform: translateY(-3px) rotateX(5deg);
+}
+
+.submit-button:active:not(:disabled) {
+  transform: translateY(0) rotateX(0deg);
+}
+
+/* Световой луч сверху */
+.card::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  width: 80%;
+  height: 100px;
+  background: linear-gradient(to bottom, rgba(245, 179, 183, 0.2), transparent);
+  transform: translateX(-50%);
+  border-radius: 50%;
+  filter: blur(20px);
+  animation: light-beam 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes light-beam {
+  0%, 100% {
+    opacity: 0.3;
+    height: 100px;
+  }
+  50% {
+    opacity: 0.6;
+    height: 120px;
+  }
+}
+
+/* Улучшенная анимация textarea */
+.textarea:focus {
+  animation: textarea-expand 0.3s ease-out;
+}
+
+@keyframes textarea-expand {
+  from {
+    transform: scale(0.98);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Блеск при наведении на select */
+.select:hover {
+  background-color: rgba(245, 179, 183, 0.02);
+}
+
+/* Responsive оптимизация анимаций */
+@media (max-width: 640px) {
+  .particle {
+    opacity: 0.08;
+  }
+
+  .title {
+    white-space: normal;
+    animation: fadeInDown 0.8s ease-out;
+  }
+
+  .card {
+    animation: formSlideIn 0.6s ease-out;
+  }
+}
+
+/* Отключение анимаций для пользователей с prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Performance optimizations */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.card,
+.input,
+.select,
+.textarea,
+.submit-button {
+  will-change: transform;
+}
+
+/* High DPI / Retina display optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .form-logo {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Print styles */
+@media print {
+  .particles,
+  .confetti-container,
+  .form-logo,
+  .card::before,
+  .card::after {
+    display: none !important;
+  }
+
+  .app {
+    background: white !important;
+  }
+
+  .card {
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+  }
+}
