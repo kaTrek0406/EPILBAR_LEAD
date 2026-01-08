@@ -470,7 +470,7 @@ ${data.comment ? `💬 Комментарий: ${data.comment}` : ''}
         </div>
 
         <footer className="footer">
-          <p className="footer-text">© 2026 Epilbar by Inna Fialkovskaya. Все права защищены.</p>
+          <p className="footer-text">© 2026 Claro Plus. Все права защищены.</p>
         </footer>
       </div>
     </div>
