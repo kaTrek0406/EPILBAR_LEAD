@@ -142,7 +142,9 @@ function App() {
 
     const serviceNames = {
       electro: 'Электро эпиляция',
-      laser: 'Лазерная эпиляция'
+      laser: 'Лазерная эпиляция',
+      sugar: 'Шугаринг',
+      wax: 'Восковая эпиляция'
     }
 
     const message = `
@@ -405,6 +407,8 @@ ${data.comment ? `💬 Комментарий: ${data.comment}` : ''}
                 <option value="">Выберите процедуру</option>
                 <option value="electro">Электро эпиляция</option>
                 <option value="laser">Лазерная эпиляция</option>
+                <option value="sugar">Шугаринг</option>
+                <option value="wax">Восковая эпиляция</option>
               </select>
               {errors.service && touched.service && (
                 <span className="error-message">{errors.service}</span>
