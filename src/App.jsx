@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import logoEpilbar from '/logo_epilbar.png'
+import { useLanguage } from './i18n/LanguageContext'
+import LanguageToggle from './components/LanguageToggle'
 
 function App() {
+  const { t, currentLanguage } = useLanguage()
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -65,19 +68,19 @@ function App() {
   const validateField = (name, value) => {
     switch (name) {
       case 'name':
-        if (!value.trim()) return 'Введите ваше имя'
-        if (value.trim().length < 2) return 'Имя должно содержать минимум 2 символа'
+        if (!value.trim()) return t.errors.nameRequired
+        if (value.trim().length < 2) return t.errors.nameMinLength
         return ''
 
       case 'phone':
-        if (!value.trim()) return 'Введите номер телефона'
+        if (!value.trim()) return t.errors.phoneRequired
         if (!validateMoldovaPhone(value)) {
-          return 'Введите корректный молдавский номер (например, +373 XX XXX-XXX)'
+          return t.errors.phoneInvalid
         }
         return ''
 
       case 'service':
-        if (!value) return 'Выберите тип процедуры'
+        if (!value) return t.errors.serviceRequired
         return ''
 
       default:
@@ -140,25 +143,22 @@ function App() {
       return { success: false, error: 'Missing environment variables' }
     }
 
-    const serviceNames = {
-      electro: 'Электро эпиляция',
-      laser: 'Лазерная эпиляция',
-      sugar: 'Шугаринг',
-      wax: 'Восковая эпиляция'
-    }
+    const locale = currentLanguage === 'ru' ? 'ru-RU' : 'ro-RO'
 
     const message = `
-🆕 Новая запись на процедуру!
+${t.telegram.newBooking}
 
-👤 Имя: ${data.name}
+${t.telegram.name} ${data.name}
 
-📱 Телефон клиента: ${data.phone.replace(/[\s-]/g, '')}
-   (нажмите на номер для звонка)
+${t.telegram.phone} ${data.phone.replace(/[\s-]/g, '')}
+   ${t.telegram.phoneHint}
 
-💆‍♀️ Процедура: ${serviceNames[data.service] || data.service}
-${data.comment ? `💬 Комментарий: ${data.comment}` : ''}
+${t.telegram.service} ${t.services[data.service] || data.service}
+${data.comment ? `${t.telegram.comment} ${data.comment}` : ''}
 
-📅 Дата заполнения формы: ${new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Chisinau' })}
+${t.telegram.date} ${new Date().toLocaleString(locale, { timeZone: 'Europe/Chisinau' })}
+
+${t.telegram.language}
     `.trim()
 
     // Inline кнопка для быстрого контакта через WhatsApp
@@ -166,7 +166,7 @@ ${data.comment ? `💬 Комментарий: ${data.comment}` : ''}
       inline_keyboard: [
         [
           {
-            text: '💬 Написать в WhatsApp',
+            text: t.telegram.whatsappButton,
             url: `https://wa.me/${data.phone.replace(/\D/g, '')}`
           }
         ]
@@ -284,8 +284,8 @@ ${data.comment ? `💬 Комментарий: ${data.comment}` : ''}
         ? result.error
         : result.error?.message || 'Неизвестная ошибка'
 
-      setErrors({ submit: `Ошибка отправки: ${errorMessage}` })
-      alert(`Не удалось отправить форму. Пожалуйста, свяжитесь с нами напрямую.\n\nДетали: ${errorMessage}`)
+      setErrors({ submit: `${t.errors.submitError} ${errorMessage}` })
+      alert(`${t.messages.submitFailed} ${errorMessage}`)
     }
   }
 
@@ -328,28 +328,28 @@ ${data.comment ? `💬 Комментарий: ${data.comment}` : ''}
       )}
 
       <div className="container">
+        <LanguageToggle />
         <div className="card">
           {/* Логотип и приветствие */}
           <div className="form-header">
             <div className="form-logo-container">
               <img src={logoEpilbar} alt="Epilbar" className="form-logo" />
             </div>
-            <h1 className="form-welcome">Добро пожаловать в Epil Bar</h1>
+            <h1 className="form-welcome">{t.header.welcome}</h1>
             <p className="form-intro">
-              Epil Bar — это студия профессиональной эпиляции, где забота о клиенте стоит на первом месте.
-              Мы работаем по современным стандартам, используем качественные профессиональные материалы и проверенные техники.
+              {t.header.intro}
             </p>
           </div>
 
-          <h2 className="title">Запись на процедуру</h2>
+          <h2 className="title">{t.form.title}</h2>
           <p className="subtitle">
-            Заполните форму ниже, чтобы записаться на сеанс эпиляции
+            {t.form.subtitle}
           </p>
 
             <form onSubmit={handleSubmit} className="form" noValidate>
             <div className="form-group">
               <label htmlFor="name" className="label">
-                Ваше имя <span className="required">*</span>
+                {t.form.nameLabel} <span className="required">{t.form.required}</span>
               </label>
               <input
                 type="text"
@@ -361,7 +361,7 @@ ${data.comment ? `💬 Комментарий: ${data.comment}` : ''}
                 className={`input ${errors.name && touched.name ? 'input-error' : ''} ${
                   !errors.name && touched.name && formData.name ? 'input-success' : ''
                 }`}
-                placeholder="Введите ваше имя"
+                placeholder={t.placeholders.name}
               />
               {errors.name && touched.name && (
                 <span className="error-message">{errors.name}</span>
@@ -370,7 +370,7 @@ ${data.comment ? `💬 Комментарий: ${data.comment}` : ''}
 
             <div className="form-group">
               <label htmlFor="phone" className="label">
-                Номер телефона <span className="required">*</span>
+                {t.form.phoneLabel} <span className="required">{t.form.required}</span>
               </label>
               <input
                 type="tel"
@@ -382,7 +382,7 @@ ${data.comment ? `💬 Комментарий: ${data.comment}` : ''}
                 className={`input ${errors.phone && touched.phone ? 'input-error' : ''} ${
                   !errors.phone && touched.phone && formData.phone ? 'input-success' : ''
                 }`}
-                placeholder="+373 XX XXX-XXX"
+                placeholder={t.placeholders.phone}
                 maxLength="17"
               />
               {errors.phone && touched.phone && (
@@ -392,7 +392,7 @@ ${data.comment ? `💬 Комментарий: ${data.comment}` : ''}
 
             <div className="form-group">
               <label htmlFor="service" className="label">
-                Тип процедуры <span className="required">*</span>
+                {t.form.serviceLabel} <span className="required">{t.form.required}</span>
               </label>
               <select
                 id="service"
@@ -404,11 +404,11 @@ ${data.comment ? `💬 Комментарий: ${data.comment}` : ''}
                   !errors.service && touched.service && formData.service ? 'input-success' : ''
                 }`}
               >
-                <option value="">Выберите процедуру</option>
-                <option value="electro">Электро эпиляция</option>
-                <option value="laser">Лазерная эпиляция</option>
-                <option value="sugar">Шугаринг</option>
-                <option value="wax">Восковая эпиляция</option>
+                <option value="">{t.placeholders.service}</option>
+                <option value="electro">{t.services.electro}</option>
+                <option value="laser">{t.services.laser}</option>
+                <option value="sugar">{t.services.sugar}</option>
+                <option value="wax">{t.services.wax}</option>
               </select>
               {errors.service && touched.service && (
                 <span className="error-message">{errors.service}</span>
@@ -417,7 +417,7 @@ ${data.comment ? `💬 Комментарий: ${data.comment}` : ''}
 
             <div className="form-group">
               <label htmlFor="comment" className="label">
-                Комментарий
+                {t.form.commentLabel}
               </label>
               <textarea
                 id="comment"
@@ -425,7 +425,7 @@ ${data.comment ? `💬 Комментарий: ${data.comment}` : ''}
                 value={formData.comment}
                 onChange={handleChange}
                 className="input textarea"
-                placeholder="Дополнительная информация или пожелания (необязательно)"
+                placeholder={t.placeholders.comment}
                 rows="4"
               />
             </div>
@@ -441,15 +441,15 @@ ${data.comment ? `💬 Комментарий: ${data.comment}` : ''}
               {isSubmitting ? (
                 <>
                   <span className="spinner"></span>
-                  Отправка...
+                  {t.form.submitting}
                 </>
               ) : submitSuccess ? (
                 <>
                   <span className="checkmark">✓</span>
-                  Отправлено!
+                  {t.form.submitted}
                 </>
               ) : (
-                'Записаться'
+                t.form.submitButton
               )}
             </button>
           </form>
@@ -462,13 +462,13 @@ ${data.comment ? `💬 Комментарий: ${data.comment}` : ''}
 
           {submitSuccess && (
             <div className="success-message">
-              Спасибо за запись! Мы свяжемся с вами в ближайшее время.
+              {t.messages.success}
             </div>
           )}
         </div>
 
         <footer className="footer">
-          <p className="footer-text">© 2026 Claro Plus. Все права защищены.</p>
+          <p className="footer-text">{t.footer.copyright}</p>
         </footer>
       </div>
     </div>

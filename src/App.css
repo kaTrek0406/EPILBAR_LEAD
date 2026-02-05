@@ -1224,3 +1224,98 @@
     border: 1px solid #ccc !important;
   }
 }
+
+/* Language Toggle Styles */
+.language-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  display: flex;
+  gap: 0.5rem;
+  background: white;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  box-shadow: var(--shadow-lg);
+  border: 2px solid var(--pink-200);
+  transition: all 0.3s ease;
+}
+
+.language-toggle-button {
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 25px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  color: var(--gray-600);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.95rem;
+}
+
+.language-toggle-button .flag {
+  font-size: 1.2rem;
+}
+
+.language-toggle-button .language-text {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.language-toggle-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(245, 179, 183, 0.3);
+}
+
+.language-toggle-button.active {
+  border-color: var(--pink-500);
+  color: var(--pink-600);
+  background: var(--pink-50);
+  transform: scale(1.05);
+}
+
+/* Mobile adjustments for language toggle */
+@media (max-width: 640px) {
+  .language-toggle {
+    top: 10px;
+    right: 10px;
+    padding: 0.35rem 0.75rem;
+    gap: 0.35rem;
+  }
+
+  .language-toggle-button {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.875rem;
+    gap: 0.25rem;
+  }
+
+  .language-toggle-button .flag {
+    font-size: 1rem;
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 641px) and (max-width: 768px) {
+  .language-toggle {
+    top: 15px;
+    right: 15px;
+  }
+}
+
+/* Animation for language toggle appearance */
+.language-toggle {
+  animation: slideInFromTop 0.5s ease-out;
+}
+
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
